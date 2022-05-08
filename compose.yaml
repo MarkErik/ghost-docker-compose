@@ -5,23 +5,30 @@ services:
     container_name: ghost
     restart: unless-stopped
     environment:
+      #URL of the site
+      url:
+      #Ghost settings
       NODE_ENV: production
       database__client: sqlite3
-      logging__level: error
       mail__transport: SMTP
       mail__from:
       mail__options__service:
       mail__options__host:
       mail__options__port:
-      mail__options__secureConnection:
+      mail__options__secure: true
       mail__options__auth__user:
       mail__options__auth__pass:
-      url:
+      logging__level: error
+      logging__path: /var/lib/ghost/logs
+      privacy__useUpdateCheck: false
+      privacy__useGravatar: false
+      #Nginx-Proxy Settings
       VIRTUAL_HOST:
       LETSENCRYPT_HOST:
       LETSENCRYPT_EMAIL:
     volumes:
       - ./ghost_content:/var/lib/ghost/content
+      - ./ghost_logs:/var/lib/ghost/logs
     networks:
       - outside
 
