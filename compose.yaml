@@ -8,19 +8,19 @@ services:
       #URL of the site
       - url=${SITE_URL}
       #Ghost settings
-      - NODE_ENV: production
-      - database__client: sqlite3
-      - mail__transport=${MAIL_TRANSPORT}
+      - NODE_ENV=${NODE_ENV:-production}
+      - database__client=${DB_CLIENT:-sqlite3}
+      - mail__transport=${MAIL_TRANSPORT:-SMTP}
       - mail__from=${MAIL_FROM}
       - mail__options__service=${MAIL_SERVICE}
       - mail__options__host=${MAIL_HOST}
-      - mail__options__port=${MAIL_PORT}
-      - mail__options__secure: false
+      - mail__options__port=${MAIL_PORT:-587}
+      - mail__options__secure=${MAIL_SECURE:-false}
       - mail__options__auth__user=${MAIL_AUTH_USER}
       - mail__options__auth__pass=${MAIL_AUTH_PASS}
-      - logging__level: error
-      - privacy__useUpdateCheck: false
-      - privacy__useGravatar: false
+      - logging__level=${LOGGING_LEVEL:-error}
+      - privacy__useUpdateCheck=${UPDATE_CHECK:-false}
+      - privacy__useGravatar=${USE_GRAVATAR:-false}
       #Nginx-Proxy Settings
       - VIRTUAL_HOST=${VIRTUAL_HOST}
       - LETSENCRYPT_HOST=${VIRTUAL_HOST}
