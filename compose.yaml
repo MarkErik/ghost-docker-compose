@@ -29,6 +29,21 @@ services:
       - ./ghost_content:/var/lib/ghost/content
     networks:
       - outside
+      
+  ghost-redirect:
+     depends_on:
+       - ghost
+     build: ./dockerfiles/redirect
+     container_name: ghost-redirect
+     restart: unless-stopped
+     environment:
+       - VIRTUAL_HOST=${REDIRECT_ADDRESS_FROM}
+       - HTTPS_METHOD=noredirect
+       - LETSENCRYPT_HOST=${REDIRECT_ADDRESS_FROM}
+       - LETSENCRYPT_EMAIL=${MAIL_AUTH_USER}
+       - REDIRECT=${SITE_URL}
+     networks:
+       - outside
 
 networks:
   outside:
